@@ -16,21 +16,31 @@
 
 # Usage:
 #   [VERSION=v3] [REGISTRY="staging-k8s.gcr.io"] make build
-VERSION?=v3
-REGISTRY?=staging-k8s.gcr.io
+SHORT_SHA?=dev-v3
+REGISTRY?=gcr.io
+PROJECT_ID?=kewei-demo-sandbox
 
 release: clean build push clean
 
+vendor:
+	@echo "🌀  Vendor go dependencies for build ..."
+	go mod download
+	go mod vendor
+	go mod verify
+	@echo "✅   Go dependencies vendored\n"
+
+test:
+	go test .
+
 # builds a docker image that builds the app and packages it into a minimal docker image
 build:
-	docker build -t ${REGISTRY}/guestbook:${VERSION} .
-
+	docker build -t ${REGISTRY}/${PROJECT_ID}/guestbook:${SHORT_SHA} .
 # push the image to an registry
 push:
-	gcloud docker -- push ${REGISTRY}/guestbook:${VERSION}
+	gcloud docker -- push ${REGISTRY}/${PROJECT_ID}/guestbook:${SHORT_SHA}
 
 # remove previous images and containers
 clean:
-	docker rm -f ${REGISTRY}/guestbook:${VERSION} 2> /dev/null || true
+	docker rm -f ${REGISTRY}/${PROJECT_ID}/guestbook:${SHORT_SHA} 2> /dev/null || true
 
 .PHONY: release clean build push
