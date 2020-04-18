@@ -22,6 +22,11 @@ PROJECT_ID?=kewei-demo-sandbox
 
 release: clean build push clean
 
+lint:
+	make vendor
+	go fmt
+	go vet
+
 vendor:
 	@echo "🌀  Vendor go dependencies for build ..."
 	go mod download
