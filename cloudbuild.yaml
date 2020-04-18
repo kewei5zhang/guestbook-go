@@ -2,7 +2,6 @@ steps:
     # This step runs the unit tests on the app
     - name: 'golang'
       id: Test
-      entrypoint: /bin/sh
       args: ['go', 'test', '.']
     
     # This step builds the container image.
