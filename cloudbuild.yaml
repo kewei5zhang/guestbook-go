@@ -33,7 +33,7 @@ steps:
         args:
         - '-c'
         - |
-            sed 's/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g; s/COMMIT_SHA/${SHORT_SHA}/g' guestbook-controller.json
+            sed 's/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g; s/COMMIT_SHA/${SHORT_SHA}/g' guestbook-deployment.yaml
         # This step deploys the new version of our container image
         # in the hello-cloudbuild Kubernetes Engine cluster.
     -   name: 'gcr.io/cloud-builders/kubectl'
@@ -42,7 +42,7 @@ steps:
         - 'apply'
         - '-f'
     #   - 'kubernetes.yaml'
-        - 'guestbook-controller.json'
+        - 'guestbook-deployment.yaml'
         env:
             - 'CLOUDSDK_COMPUTE_ZONE=australia-southeast1-b'
             - 'CLOUDSDK_CONTAINER_CLUSTER=guestbook-demo'
