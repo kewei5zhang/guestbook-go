@@ -42,7 +42,7 @@ steps:
         - 'apply'
         - '-f'
     #   - 'kubernetes.yaml'
-        - 'guestbook-controller.json.json'
+        - 'guestbook-controller.json'
         env:
             - 'CLOUDSDK_COMPUTE_ZONE=australia-southeast1-b'
             - 'CLOUDSDK_CONTAINER_CLUSTER=guestbook-demo'
